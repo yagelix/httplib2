@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+python="$1"
+nose_flags="-sv --with-coverage --cover-erase --cover-package=httplib2"
+if [[ "$python" == python2* ]]; then
+  nosetests $nose_flags python2/httplib2test.py
+  nosetests $nose_flags python2/httplib2test_appengine.py
+  nosetests $nose_flags python2/ssl_protocol_test.py
+elif [[ "$python" == python3* ]]; then
+  nosetests $nose_flags python3/httplib2test.py
+else
+  echo "invalid arg1: '$python', expected 'python[23]*'" >&2
+  exit 1
+fi
